@@ -26,6 +26,28 @@ class _SheduleWidgetState extends State<SheduleWidget> {
     return name;
   }
 
+  Future<void> handleTileTap(BuildContext context, String name) async {
+    try {
+      dynamic response = await ClientApi.getByQuery(name);
+
+      if (response is Choices) {
+        for (Choice choice in response.choices) {
+          if (choice.name == name) {
+            response = await ClientApi.getByGroupId(choice.group);
+            break;
+          }
+        }
+      }
+
+      Navigator.of(context).pushNamed(
+        '/schedule_detail',
+        arguments: {'name': name, 'modal': response},
+      );
+    } catch (e) {
+      print('Ошибка при обработке запроса: $e');
+    }
+  }
+
   Future<void> fetchNamesData(String query) async {
     final response;
     try {
@@ -46,9 +68,6 @@ class _SheduleWidgetState extends State<SheduleWidget> {
   @override
   Widget build(BuildContext context) {
     String? userGroupName = SettingsModalProvider.of(context)!.modal?.groupName;
-    if (names.isEmpty && userGroupName != null){
-      names.add(userGroupName);
-    }
     return SafeArea(
         child: Column(
       children: [
@@ -70,6 +89,14 @@ class _SheduleWidgetState extends State<SheduleWidget> {
             contentPadding: EdgeInsets.all(8),
           ),
         ),
+        userGroupName != null
+            ? ListTile(
+                title: Text(userGroupName),
+                leading: Icon(Icons.star),
+                onTap: () async => handleTileTap(context, userGroupName))
+            : SizedBox(
+                height: 4.0,
+              ),
         Expanded(
           child: ListView.builder(
               itemCount: names.length,
@@ -77,20 +104,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                 final name = names[index];
                 return ListTile(
                     title: Text(name),
-                    onTap: () async {
-                      dynamic response = await ClientApi.getByQuery(name);
-                      if (response is Choices) {
-                        for (Choice choice in response.choices) {
-                          if (choice.name == name) {
-                            response =
-                                await ClientApi.getByGroupId(choice.group);
-                            break;
-                          }
-                        }
-                      }
-                      Navigator.of(context).pushNamed('/schedule_detail',
-                          arguments: {'name': name, "modal": response});
-                    });
+                    onTap: () async => handleTileTap(context, name));
               }),
         ),
       ],

@@ -6,9 +6,7 @@ void initializeTimezones() {
 }
 
 DateTime getMoscowTime() {
-  // Получаем локацию для Москвы
-  final moscow = tz.getLocation("Europe/Moscow");
-
-  // Возвращаем текущее время в Москве
-  return tz.TZDateTime.now(moscow); // Преобразуем в локальное время
+  final moscow = tz.getLocation('Europe/Moscow');
+  DateTime moscowTime = tz.TZDateTime.now(moscow);
+  return moscowTime;
 }

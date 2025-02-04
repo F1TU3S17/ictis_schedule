@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ictis_schedule/db/schedule_database.dart';
 import 'package:ictis_schedule/entity/schedule_response.dart';
 import 'package:ictis_schedule/entity/schedule_table.dart';
+import 'package:ictis_schedule/time/is_current_subject.dart';
 import 'package:ictis_schedule/widgets/elments/active_button.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget_provider.dart';

@@ -1,7 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 part 'choice.g.dart';
 
-@JsonSerializable()
 class Choice {
   final String name;
   final String id;

@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       child: Builder(
         builder: (context) {
           return MaterialApp(
-            title: 'ICTIS',
+            title: 'ИКТИБ',
             home: const NavigationWidget(),
             theme: SettingsModalProvider.of(context)!.modal!.isDarkTheme ? (darkTheme) : (lightTheme),
             routes: <String, WidgetBuilder>{

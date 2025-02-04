@@ -36,7 +36,7 @@ final lightTheme = ThemeData(
     
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: const Color(0xFF4CAF50),
+    backgroundColor: const Color(0xFF2E5AAC),
     foregroundColor: Colors.white,
   ),
   cardTheme: CardTheme(
@@ -45,4 +45,7 @@ final lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(12),
     ),
   ),
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: const Color(0xFF2E5AAC),
+  )
 );

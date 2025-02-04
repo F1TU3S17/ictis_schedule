@@ -1,33 +1,33 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:ictis_schedule/time/timezones.dart';
+import 'package:ictis_schedule/time/is_current_subject.dart';
 import 'package:ictis_schedule/widgets/home/homeWidget/home_widget_modal.dart';
-
-
-Color isCurrentSubject(String subjectTime) {
-    final subjectStartTime = subjectTime.split("-")[0];
-    final subjectEndTime = subjectTime.split("-")[1];
-
-    final subjectStartHour = int.parse(subjectStartTime.split(":")[0]);
-    final subjectStartMinute = int.parse(subjectStartTime.split(":")[1]);
-    final subjectEndHour = int.parse(subjectEndTime.split(":")[0]);
-    final subjectEndMinute = int.parse(subjectEndTime.split(":")[1]);
-  
-    final now = getMoscowTime();
-
-    final subjectStart = DateTime(now.year, now.month, now.day, subjectStartHour, subjectStartMinute);
-    final subjectEnd = DateTime(now.year, now.month, now.day, subjectEndHour, subjectEndMinute);
-
-    // Проверяем, находится ли текущее время в диапазоне
-    if (now.isAfter(subjectStart) && now.isBefore(subjectEnd)) {
-      return Colors.green;
-    } else {
-      return Colors.transparent;
-    }
-  }
+import 'package:ictis_schedule/widgets/subject_list/calculate_progress.dart';
 
 class CurrentDaySubjectsListWidget extends StatelessWidget {
   final dayIndex;
   const CurrentDaySubjectsListWidget({super.key, required this.dayIndex});
+
+  String getRandomPhrase() {
+  final randomPhrases = [
+    "У вас выходной! Время для Netflix и мирового господства 🍿",
+    "Пар нет? Значит, сегодня день для кофе и пледа ☕",
+    "Пустое расписание — это холст, а вы — художник своего дня 🎨✨",
+    "Нет пар? Значит, время для игр и великих побед! 🎮",
+    "Сегодня без пар! Время для саморазвития, новых идей и вдохновения 🚀",
+    "Пар нет, а значит — время для чипсов, музыки и мемов 😎",
+    "Эксперимент дня: изучить, как долго можно отдыхать, не нарушая законы физики ⚛️",
+    "Выходной? Значит, время для прогулок, селфи и новых историй 📸",
+    "У вас выходной! Официальный день прокрастинации объявляется открытым 🛋️",
+    "Пустота расписания — это не отсутствие дел, а возможность наполнить день смыслом 🌌",
+    "Выходной!? Значит пора в качалку к Павлу Бэру!!!"
+
+  ];
+
+  // Возвращаем случайную фразу
+  return randomPhrases[Random().nextInt(randomPhrases.length)];
+}
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,13 @@ class CurrentDaySubjectsListWidget extends StatelessWidget {
     final countSubject = subjects.length;
     final subjectTime = model.table!.getSubjectsTime();
     if (countSubject == 0) {
-      return Text("У вас выходной, никаких пар, отдыхайте :)");
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          getRandomPhrase(), 
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      );
     }
     return ListView.builder(
       itemCount: countSubject,
@@ -90,7 +96,7 @@ class SubjectBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String _subject = subject;
     if (subject == "") {
-      _subject = "Нет занятий";
+      _subject = "Окно";
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,42 +113,6 @@ class SubjectBodyWidget extends StatelessWidget {
 class SubjectTimeProgressWidget extends StatelessWidget {
   final subjectTime;
   
-  int _getAbsoluteMinutes(DateTime dateTime) {
-  return dateTime.day * 24 * 60 + // Минуты от дней
-         dateTime.hour * 60 +     // Минуты от часов
-         dateTime.minute;         // Минуты
-  }
-
-  double calculateProgress(){
-    final subjectStartTime = subjectTime.split("-")[0];
-    final subjectEndTime = subjectTime.split("-")[1];
-
-    final subjectStartHour = int.parse(subjectStartTime.split(":")[0]);
-    final subjectStartMinute = int.parse(subjectStartTime.split(":")[1]);
-    final subjectEndHour = int.parse(subjectEndTime.split(":")[0]);
-    final subjectEndMinute = int.parse(subjectEndTime.split(":")[1]);
-  
-    final now = getMoscowTime();
-
-    final subjectStart = DateTime(now.year, now.month, now.day, subjectStartHour, subjectStartMinute);
-    final subjectEnd = DateTime(now.year, now.month, now.day, subjectEndHour, subjectEndMinute);
-
-    if (now.isAfter(subjectEnd)){
-      return 1;
-    }
-    if (now.isBefore(subjectStart)){
-      return 0;
-    }
-
-    int subjectMinute = _getAbsoluteMinutes(subjectEnd) -  _getAbsoluteMinutes(subjectStart);
-    int nowInMinuteAfterStart = _getAbsoluteMinutes(now) - _getAbsoluteMinutes(subjectStart);
-    double differenceNowEnd = nowInMinuteAfterStart / subjectMinute; 
-  
-    return differenceNowEnd;
-
-  }
-
-
   const SubjectTimeProgressWidget({
     super.key,
     required this.subjectTime
@@ -154,11 +124,11 @@ class SubjectTimeProgressWidget extends StatelessWidget {
       return SizedBox();
     }
     return LinearProgressIndicator(
-        value: calculateProgress(), // Значение прогресса (от 0 до 1)
-        color: Colors.green, // Цвет заполненной части
-        backgroundColor: Colors.grey[450], // Цвет фона
-        minHeight: 2, // Высота полоски
-        borderRadius: BorderRadius.circular(2), //Скругления по краям полосы 
+        value: calculateProgress(subjectTime), // Значение прогресса (от 0 до 1)
+        color: Colors.green, 
+        backgroundColor: Colors.grey[450], 
+        minHeight: 2, 
+        borderRadius: BorderRadius.circular(2), 
       );
   }
 }
