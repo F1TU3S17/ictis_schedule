@@ -28,5 +28,5 @@ class SettingsModal extends ChangeNotifier {
     groupLink = table.groupLink;
     notifyListeners();
   }
-
+  
 }

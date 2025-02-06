@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ictis_schedule/db/settings_database.dart';

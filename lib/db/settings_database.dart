@@ -42,4 +42,23 @@ class SettingsDatabase {
     await Hive.box('settingsBox').close();
   }
 
+  static Future<void> addFavoriteGroup(String groupName) async{
+    if(!Hive.isAdapterRegistered(0)){
+      Hive.registerAdapter(ScheduleTableAdapter());
+    }
+    final Box<dynamic> box = Hive.box('settingsBox');
+    List<String> listFavorites = box.get("favoriteGroupList", defaultValue: [getTable()?.groupName]);
+    listFavorites.add(groupName);
+    await box.put("favoriteGroupList", listFavorites);
+  }
+
+  static List<String> getFavoriteGroupList() {
+    if(!Hive.isAdapterRegistered(0)){
+      Hive.registerAdapter(ScheduleTableAdapter());
+    }
+    final Box<dynamic> box = Hive.box('settingsBox');
+    List<String> listFavorites = box.get("favoriteGroupList", defaultValue: [getTable()?.groupName]);
+    return listFavorites;
+  }
+
 }

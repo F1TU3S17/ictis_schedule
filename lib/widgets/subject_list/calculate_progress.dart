@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ictis_schedule/time/absolute_minutes.dart';
 import 'package:ictis_schedule/time/timezones.dart';
-import 'package:ictis_schedule/widgets/subject_list/current_day_subjects_list_widget.dart';
 
 double calculateProgress(String subjectTime) {
   // Разделяем строку времени на начало и конец

@@ -3,10 +3,11 @@ import 'package:ictis_schedule/db/schedule_database.dart';
 import 'package:ictis_schedule/entity/schedule_response.dart';
 import 'package:ictis_schedule/entity/schedule_table.dart';
 import 'package:ictis_schedule/time/is_current_subject.dart';
+import 'package:ictis_schedule/time/timezones.dart';
 import 'package:ictis_schedule/widgets/elments/active_button.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget_provider.dart';
-import 'package:ictis_schedule/widgets/subject_list/current_day_subjects_list_widget.dart';
+import 'package:ictis_schedule/widgets/subject_list/subject_body_widget.dart';
 
 class SheduleDetailWidget extends StatefulWidget {
   const SheduleDetailWidget({super.key});
@@ -17,6 +18,13 @@ class SheduleDetailWidget extends StatefulWidget {
 
 class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
   late ScheduleDataBase db = ScheduleDataBase();
+
+  Color _checkCurrentDay(String strSubjectTime, int currentDay, int currentWeek, int currentLookWeek){
+    if ((isCurrentSubject(strSubjectTime) == Colors.green) && (now.weekday == currentDay) && currentWeek == currentLookWeek){
+      return Colors.green;
+    }
+    return Colors.transparent;
+  }
 
   @override
   void initState() {
@@ -29,7 +37,7 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
     db.close();
     super.dispose();
   }
-
+  final now = getMoscowTime();
   bool _isLoading = false;
   final List<String> days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
   @override
@@ -114,7 +122,7 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                         side: BorderSide(
-                          color: isCurrentSubject(subjectTime[index]),
+                          color: _checkCurrentDay(subjectTime[index], modal.currentDayIndex, currentWeek, currentLookWeek),
                           width: 2,
                         ),
                       ),
