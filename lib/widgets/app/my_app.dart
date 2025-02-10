@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ictis_schedule/db/settings_database.dart';
@@ -73,8 +71,11 @@ class _MyAppState extends State<MyApp> {
               },
               '/settings/set_group' : (context) {
                 return SettingsSetGroupWidget();
+              },
+              '/error' : (context) {
+                return ErrorPageWidget();
               }
-            }
+            },
           );
         }
       ),

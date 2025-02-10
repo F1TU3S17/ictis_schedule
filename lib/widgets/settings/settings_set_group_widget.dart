@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ictis_schedule/db/settings_database.dart';
 import 'package:ictis_schedule/domain/api_client/client_api.dart';
 import 'package:ictis_schedule/entity/choices/choice.dart';
 import 'package:ictis_schedule/entity/choices/choices.dart';
@@ -86,6 +87,7 @@ class _SettingsSetGroupWidgetState extends State<SettingsSetGroupWidget> {
                         }
                       }
                     }
+                    SettingsModalProvider.of(context)!.modal!.addGroupInfoWithNotification(name);
                     SettingsModalProvider.of(context)!.modal!.setGroupInfo(response.table);
                     Navigator.of(context).pop();
                   }

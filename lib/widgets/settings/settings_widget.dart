@@ -33,7 +33,6 @@ class _SettingsBodyState extends State<SettingsBody> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         spacing: 10,
-
         children: [
           Row(
             spacing: 20,
@@ -63,6 +62,13 @@ class _SettingsBodyState extends State<SettingsBody> {
           )
             ],
           ),
+          Row(
+            children: [
+              Text("Очистить кэш"),
+              IconButton(icon: Icon(Icons.delete), onPressed: ()async{ await modal.clearCache();})
+            ],
+          ),
+
 
         ],
       ),

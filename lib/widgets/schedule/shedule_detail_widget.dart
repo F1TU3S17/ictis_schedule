@@ -7,6 +7,7 @@ import 'package:ictis_schedule/time/timezones.dart';
 import 'package:ictis_schedule/widgets/elments/active_button.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget.dart';
 import 'package:ictis_schedule/widgets/schedule/shedule_detail_modal_widget_provider.dart';
+import 'package:ictis_schedule/widgets/settings/settings_modal/settings_modal_provider.dart';
 import 'package:ictis_schedule/widgets/subject_list/subject_body_widget.dart';
 
 class SheduleDetailWidget extends StatefulWidget {
@@ -19,8 +20,18 @@ class SheduleDetailWidget extends StatefulWidget {
 class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
   late ScheduleDataBase db = ScheduleDataBase();
 
-  Color _checkCurrentDay(String strSubjectTime, int currentDay, int currentWeek, int currentLookWeek){
-    if ((isCurrentSubject(strSubjectTime) == Colors.green) && (now.weekday == currentDay) && currentWeek == currentLookWeek){
+  Future<void> _changeFavoriteStatus(
+      bool isFavoriteGroup, String name, BuildContext context) async {
+    await SettingsModalProvider.of(context)!
+        .modal!
+        .changeFavoritesGroups(isFavoriteGroup, name);
+  }
+
+  Color _checkCurrentDay(String strSubjectTime, int currentDay, int currentWeek,
+      int currentLookWeek) {
+    if ((isCurrentSubject(strSubjectTime) == Colors.green) &&
+        (now.weekday == currentDay) &&
+        currentWeek == currentLookWeek) {
       return Colors.green;
     }
     return Colors.transparent;
@@ -37,6 +48,7 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
     db.close();
     super.dispose();
   }
+
   final now = getMoscowTime();
   bool _isLoading = false;
   final List<String> days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
@@ -56,9 +68,18 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
     final currentLookWeek = modal.currentLookWeek;
     final weeks = modal.modal.weeks;
     final String currentDay = modal.modal.table.getCurrentDayByDayIndex(index);
+    final bool isFavoriteGroup = modal.isFavoriteGroup;
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await _changeFavoriteStatus(isFavoriteGroup, name, context);
+              },
+              icon: Icon(
+                  isFavoriteGroup ? Icons.star : Icons.star_outline_outlined))
+        ],
       ),
       body: Stack(children: [
         Column(
@@ -80,7 +101,7 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
                             await changeWeek(
                                 currentLookWeek, context, week, weeks);
                           },
-                          isActive: currentLookWeek == (buildIndex + 1),
+                          isActive: currentLookWeek == week,
                         ),
                       );
                     }),
@@ -122,7 +143,11 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                         side: BorderSide(
-                          color: _checkCurrentDay(subjectTime[index], modal.currentDayIndex, currentWeek, currentLookWeek),
+                          color: _checkCurrentDay(
+                              subjectTime[index],
+                              modal.currentDayIndex,
+                              currentWeek,
+                              currentLookWeek),
                           width: 2,
                         ),
                       ),
@@ -175,21 +200,23 @@ class _SheduleDetailWidgetState extends State<SheduleDetailWidget> {
 
   Future<void> changeWeek(int currentLookWeek, BuildContext context, int week,
       List<int> weeks) async {
-    final bool isCurrentWeekInDb = await db.cheakKey(currentLookWeek);
-    final modal = SheduleDetailModalWidgetProvider.of(context)!.modal!;
-    if (!isCurrentWeekInDb) {
-      await db.addSchedule(currentLookWeek, modal.modal.table);
-    }
-    final bool isNewWeekInDb = await db.cheakKey(week);
-    if (!isNewWeekInDb) {
-      //Так делать дурной тон, но Изначально модель не продумал, поэтому обходимся таким образом ) 
-      setState(() => _isLoading = true);
-      await modal.loadNewWeek(week);
-      setState(() => _isLoading = false);
-    } else {
-      ScheduleTable? table = await db.getSchedule(week);
-      ScheduleResponse sr = ScheduleResponse(table: table!, weeks: weeks);
-      modal.updateModal(sr, week);
+    if (weeks.length > 1) {
+      final bool isCurrentWeekInDb = await db.cheakKey(currentLookWeek);
+      final modal = SheduleDetailModalWidgetProvider.of(context)!.modal!;
+      if (!isCurrentWeekInDb) {
+        await db.addSchedule(currentLookWeek, modal.modal.table);
+      }
+      final bool isNewWeekInDb = await db.cheakKey(week);
+      if (!isNewWeekInDb) {
+        //Так делать дурной тон, но Изначально модель не продумал, поэтому обходимся таким образом )
+        setState(() => _isLoading = true);
+        await modal.loadNewWeek(week);
+        setState(() => _isLoading = false);
+      } else {
+        ScheduleTable? table = await db.getSchedule(week);
+        ScheduleResponse sr = ScheduleResponse(table: table!, weeks: weeks);
+        modal.updateModal(sr, week);
+      }
     }
   }
 }

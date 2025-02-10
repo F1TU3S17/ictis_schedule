@@ -1,0 +1,17 @@
+{
+    "imports": [
+        "import 'package:equatable/equatable.dart';"
+    ],
+    "classStructure": [
+        "/// {@template {className}}",
+        "/// ",
+        "/// {@endtemplate}",
+        "class {className} extends Equatable {",
+        "  /// {@macro {className}}",
+        "  const {className}();",
+        " ",
+        "  @override",
+        "  List<Object?> get props => [];",
+        "}"
+    ]
+}
