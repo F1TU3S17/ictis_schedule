@@ -9,8 +9,13 @@ class SheduleDetailModalWidget extends ChangeNotifier {
   late int currentLookWeek;
   late bool isFavoriteGroup;
   ScheduleResponse modal;
-  
+
+
   SheduleDetailModalWidget({required this.modal}) {
+      // Получаем текущий день недели (1 - понедельник, 7 - воскресенье)
+      int weekday = DateTime.now().weekday;
+      // Если сегодня воскресенье (7), сбрасываем до понедельника (1)
+      currentDayIndex = weekday == 7 ? 1 : weekday;
       currentWeek = modal.table.currentWeek;
       currentLookWeek = currentWeek;
       isFavoriteGroup = SettingsDatabase.isFavoriteGroup(modal.table.groupName);

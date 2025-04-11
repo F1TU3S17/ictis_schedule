@@ -5,9 +5,10 @@ import 'package:ictis_schedule/entity/choices/choices.dart';
 import 'package:ictis_schedule/entity/schedule_response.dart';
 
 class ClientApi {
+  static final baseUrl = "https://shedule.rdcenter.ru/schedule-api";
   static Future<dynamic> getByQuery(String query) async {
     final url =
-        Uri.parse("https://webictis.sfedu.ru/schedule-api/?query=$query");
+        Uri.parse("$baseUrl/?query=$query");
     final response = await http.get(url);
     final json = jsonDecode(response.body);
     if (json.containsKey('result') && json['result'] == 'no_entries') {
@@ -25,7 +26,7 @@ class ClientApi {
 
   static Future<ScheduleResponse> getByGroupId(String gropuid) async {
     final url =
-        Uri.parse("https://webictis.sfedu.ru/schedule-api/?group=$gropuid");
+        Uri.parse("$baseUrl/?group=$gropuid");
     final response = await http.get(url);
     final json = jsonDecode(response.body);
     ScheduleResponse scheduleResponse = ScheduleResponse.fromJson(json);
@@ -35,7 +36,7 @@ class ClientApi {
   static Future<ScheduleResponse> getByGroupIdAndWeek(
       String gropuid, int week) async {
     final url = Uri.parse(
-        "https://webictis.sfedu.ru/schedule-api/?group=$gropuid&week=$week");
+        "$baseUrl/?group=$gropuid&week=$week");
     final response = await http.get(url);
     final json = jsonDecode(response.body);
     ScheduleResponse scheduleResponse = ScheduleResponse.fromJson(json);
