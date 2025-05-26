@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_current_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Загрузка даты..."
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Lesson 1 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson1" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson1_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson1_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Загрузка..."
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 2 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson2" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson2_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson2_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 3 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson3" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson3_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson3_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 4 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson4" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson4_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson4_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 5 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson5" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson5_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson5_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 6 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson6" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/tv_lesson6_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson6_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Lesson 7 -->
+    <LinearLayout
+        android:id="@+id/ll_lesson7" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="8dp">
+        <!-- Note: Removed marginBottom from the last lesson to avoid double spacing if it's the last element -->
+        <TextView
+            android:id="@+id/tv_lesson7_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:id="@+id/tv_lesson7_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

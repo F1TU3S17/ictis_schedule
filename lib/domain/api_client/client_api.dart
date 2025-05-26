@@ -6,9 +6,9 @@ import 'package:ictis_schedule/entity/schedule_response.dart';
 
 class ClientApi {
   static final baseUrl = "https://shedule.rdcenter.ru/schedule-api";
+
   static Future<dynamic> getByQuery(String query) async {
-    final url =
-        Uri.parse("$baseUrl/?query=$query");
+    final url = Uri.parse("$baseUrl/?query=$query");
     final response = await http.get(url);
     final json = jsonDecode(response.body);
     if (json.containsKey('result') && json['result'] == 'no_entries') {
